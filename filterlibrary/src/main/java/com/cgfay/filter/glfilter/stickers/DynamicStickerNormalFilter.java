@@ -136,7 +136,7 @@ public class DynamicStickerNormalFilter extends DynamicStickerBaseFilter {
             for (int faceIndex = 0; faceIndex < faceCount; faceIndex++) {
                 OneFace oneFace = LandmarkEngine.getInstance().getOneFace(faceIndex);
                 // 如果置信度大于0.5，表示这是一个正常的人脸，绘制贴纸
-                if (oneFace.confidence > 0.5f) {
+//                if (oneFace.confidence > 0.5f) {
                     for (int stickerIndex = 0; stickerIndex < mStickerLoaderList.size(); stickerIndex++) {
                         synchronized (this) {
                             mStickerLoaderList.get(stickerIndex).updateStickerTexture();
@@ -145,7 +145,7 @@ public class DynamicStickerNormalFilter extends DynamicStickerBaseFilter {
                             super.drawFrameBuffer(mStickerLoaderList.get(stickerIndex).getStickerTexture(), mVertexBuffer, mTextureBuffer);
                         }
                     }
-                }
+//                }
             }
             GLES30.glFlush();
         }

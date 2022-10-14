@@ -3,7 +3,7 @@ package com.cgfay.landmark;
 import android.util.SparseArray;
 
 /**
- * 人脸关键点引擎
+ * Face Keypoint Engine
  */
 public final class LandmarkEngine {
 
@@ -21,16 +21,22 @@ public final class LandmarkEngine {
 
     private final Object mSyncFence = new Object();
 
-    // 人脸对象列表
-    // 由于人脸数据个数有限，图像中的人脸个数小于千级，而且人脸索引是连续的，用SparseArray比Hashmap性能要更好
+    // list of face objects
+    // Due to the limited number of face data,
+    // the number of faces in the image is less than a thousand,
+    // and the face index is continuous, using SparseArray is better than Hashmap
     private final SparseArray<OneFace> mFaceArrays;
 
-    // 手机当前的方向，0表示正屏幕，3表示倒过来，1表示左屏幕，2表示右屏幕
+    // The current direction of the phone,
+    // 0 means the front screen,
+    // 3 means the reverse,
+    // 1 means the left screen,
+    // 2 means the right screen
     private float mOrientation;
     private boolean mNeedFlip;
 
     /**
-     * 设置旋转角度
+     * Set the rotation angle
      * @param orientation
      */
     public void setOrientation(int orientation) {
@@ -38,7 +44,7 @@ public final class LandmarkEngine {
     }
 
     /**
-     * 设置是否需要翻转
+     * Whether the setting needs to be flipped
      * @param flip
      */
     public void setNeedFlip(boolean flip) {
@@ -46,7 +52,7 @@ public final class LandmarkEngine {
     }
 
     /**
-     * 设置人脸数
+     * Set the number of faces
      * @param size
      */
     public void setFaceSize(int size) {
@@ -59,7 +65,7 @@ public final class LandmarkEngine {
     }
 
     /**
-     * 是否存在人脸
+     * Is there a face
      * @return
      */
     public boolean hasFace() {
@@ -71,7 +77,7 @@ public final class LandmarkEngine {
     }
 
     /**
-     * 获取一个人脸关键点数据对象
+     * Get a face keypoint data object
      * @return
      */
     public OneFace getOneFace(int index) {
@@ -86,7 +92,7 @@ public final class LandmarkEngine {
     }
 
     /**
-     * 插入一个人脸关键点数据对象
+     * Insert a face keypoint data object
      * @param index
      */
     public void putOneFace(int index, OneFace oneFace) {
@@ -96,7 +102,7 @@ public final class LandmarkEngine {
     }
 
     /**
-     * 获取人脸个数
+     * Get the number of faces
      * @return
      */
     public int getFaceSize() {
@@ -104,7 +110,7 @@ public final class LandmarkEngine {
     }
 
     /**
-     * 获取人脸列表
+     * Get a list of faces
      * @return
      */
     public SparseArray<OneFace> getFaceArrays() {
@@ -112,7 +118,7 @@ public final class LandmarkEngine {
     }
 
     /**
-     * 清空所有人脸对象
+     * Clear all face objects
      */
     public void clearAll() {
         synchronized (mSyncFence) {
@@ -121,7 +127,7 @@ public final class LandmarkEngine {
     }
 
     /**
-     * 计算额外人脸顶点，新增8个额外顶点坐标
+     * Calculate extra face vertices, add 8 extra vertex coordinates
      * @param vertexPoints
      * @param index
      */
@@ -131,11 +137,11 @@ public final class LandmarkEngine {
             return;
         }
         OneFace oneFace = mFaceArrays.get(index);
-        // 复制关键点的数据
+        // Copy key data
         System.arraycopy(oneFace.vertexPoints, 0, vertexPoints, 0, oneFace.vertexPoints.length);
-        // 新增的人脸关键点
+        // Added face key points
         float[] point = new float[2];
-        // 嘴唇中心
+        // center of lips
         FacePointsUtils.getCenter(point,
                 vertexPoints[FaceLandmark.mouthUpperLipBottom * 2],
                 vertexPoints[FaceLandmark.mouthUpperLipBottom * 2 + 1],
@@ -145,7 +151,7 @@ public final class LandmarkEngine {
         vertexPoints[FaceLandmark.mouthCenter * 2] = point[0];
         vertexPoints[FaceLandmark.mouthCenter * 2 + 1] = point[1];
 
-        // 左眉心
+        // left eyebrow
         FacePointsUtils.getCenter(point,
                 vertexPoints[FaceLandmark.leftEyebrowUpperMiddle * 2],
                 vertexPoints[FaceLandmark.leftEyebrowUpperMiddle * 2 + 1],
@@ -155,7 +161,7 @@ public final class LandmarkEngine {
         vertexPoints[FaceLandmark.leftEyebrowCenter * 2] = point[0];
         vertexPoints[FaceLandmark.leftEyebrowCenter * 2 + 1] = point[1];
 
-        // 右眉心
+        // Right eyebrow
         FacePointsUtils.getCenter(point,
                 vertexPoints[FaceLandmark.rightEyebrowUpperMiddle * 2],
                 vertexPoints[FaceLandmark.rightEyebrowUpperMiddle * 2 + 1],
@@ -165,11 +171,12 @@ public final class LandmarkEngine {
         vertexPoints[FaceLandmark.rightEyebrowCenter * 2] = point[0];
         vertexPoints[FaceLandmark.rightEyebrowCenter * 2 + 1] = point[1];
 
-        // 额头中心
+        // center of forehead
         vertexPoints[FaceLandmark.headCenter * 2] = vertexPoints[FaceLandmark.eyeCenter * 2] * 2.0f - vertexPoints[FaceLandmark.noseLowerMiddle * 2];
         vertexPoints[FaceLandmark.headCenter * 2 + 1] = vertexPoints[FaceLandmark.eyeCenter * 2 + 1] * 2.0f - vertexPoints[FaceLandmark.noseLowerMiddle * 2 + 1];
 
-        // 额头左侧，备注：这个点不太准确，后续优化
+        // The left side of the forehead,
+        // note: this point is not very accurate, follow-up optimization
         FacePointsUtils.getCenter(point,
                 vertexPoints[FaceLandmark.leftEyebrowLeftTopCorner * 2],
                 vertexPoints[FaceLandmark.leftEyebrowLeftTopCorner * 2 + 1],
@@ -179,7 +186,8 @@ public final class LandmarkEngine {
         vertexPoints[FaceLandmark.leftHead * 2] = point[0];
         vertexPoints[FaceLandmark.leftHead * 2 + 1] = point[1];
 
-        // 额头右侧，备注：这个点不太准确，后续优化
+        // On the right side of the forehead,
+        // note: this point is not very accurate, follow-up optimization
         FacePointsUtils.getCenter(point,
                 vertexPoints[FaceLandmark.rightEyebrowRightTopCorner * 2],
                 vertexPoints[FaceLandmark.rightEyebrowRightTopCorner * 2 + 1],
@@ -189,7 +197,7 @@ public final class LandmarkEngine {
         vertexPoints[FaceLandmark.rightHead * 2] = point[0];
         vertexPoints[FaceLandmark.rightHead * 2 + 1] = point[1];
 
-        // 左脸颊中心
+        // left cheek center
         FacePointsUtils.getCenter(point,
                 vertexPoints[FaceLandmark.leftCheekEdgeCenter * 2],
                 vertexPoints[FaceLandmark.leftCheekEdgeCenter * 2 + 1],
@@ -199,7 +207,7 @@ public final class LandmarkEngine {
         vertexPoints[FaceLandmark.leftCheekCenter * 2] = point[0];
         vertexPoints[FaceLandmark.leftCheekCenter * 2 + 1] = point[1];
 
-        // 右脸颊中心
+        // Right cheek center
         FacePointsUtils.getCenter(point,
                 vertexPoints[FaceLandmark.rightCheekEdgeCenter * 2],
                 vertexPoints[FaceLandmark.rightCheekEdgeCenter * 2 + 1],
@@ -211,7 +219,7 @@ public final class LandmarkEngine {
     }
 
     /**
-     * 计算
+     * calculate image edge points
      * @param vertexPoints
      */
     private void calculateImageEdgePoints(float[] vertexPoints) {
@@ -256,7 +264,7 @@ public final class LandmarkEngine {
             vertexPoints[117 * 2] = -1;
             vertexPoints[117 * 2 + 1] = 1;
         }
-        // 118 ~ 121 与 114 ~ 117 的顶点坐标恰好反过来
+        // The vertex coordinates of 118 ~ 121 and 114 ~ 117 are just reversed
         vertexPoints[118 * 2] = -vertexPoints[114 * 2];
         vertexPoints[118 * 2 + 1] = -vertexPoints[114 * 2 + 1];
         vertexPoints[119 * 2] = -vertexPoints[115 * 2];
@@ -266,7 +274,9 @@ public final class LandmarkEngine {
         vertexPoints[121 * 2] = -vertexPoints[117 * 2];
         vertexPoints[121 * 2 + 1] = -vertexPoints[117 * 2 + 1];
 
-        // 是否需要做翻转处理，前置摄像头预览时，关键点是做了翻转处理的，因此图像边沿的关键点也要做翻转能处理
+        // Whether it needs to be flipped or not?
+        // When previewing the front camera, the key points are flipped,
+        // so the key points at the edge of the image should also be flipped.
         if (mNeedFlip) {
             for (int i = 0; i < 8; i++) {
                 vertexPoints[(114 + i) * 2] = -vertexPoints[(114 + i) * 2];
@@ -277,28 +287,29 @@ public final class LandmarkEngine {
     }
 
     /**
-     * 获取用于美型处理的坐标
-     * @param vertexPoints  顶点坐标，一共122个顶点
-     * @param texturePoints 纹理坐标，一共122个顶点
-     * @param faceIndex     人脸索引
+     * Get the coordinates for beauty processing
+     * @param vertexPoints vertex coordinates, a total of 122 vertices
+     * @param texturePoints texture coordinates, a total of 122 vertices
+     * @param faceIndex face index
      */
     public void updateFaceAdjustPoints(float[] vertexPoints, float[] texturePoints, int faceIndex) {
         if (vertexPoints == null || vertexPoints.length != 122 * 2
                 || texturePoints == null || texturePoints.length != 122 * 2) {
             return;
         }
-        // 计算额外的人脸顶点坐标
+        // Calculate additional face vertex coordinates
         calculateExtraFacePoints(vertexPoints, faceIndex);
-        // 计算图像边沿顶点坐标
+        // Calculate image edge vertex coordinates
         calculateImageEdgePoints(vertexPoints);
-        // 计算纹理坐标
+        // Calculate texture coordinates
         for (int i = 0; i < vertexPoints.length; i++) {
             texturePoints[i] = vertexPoints[i] * 0.5f + 0.5f;
         }
     }
 
     /**
-     * 阴影(修容)顶点坐标，修容用的是整个人脸的顶点坐标
+     * Shadow (retouching) vertex coordinates,
+     * the vertex coordinates of the entire face are used for grooming
      * @param vetexPoints
      * @param faceIndex
      */
@@ -307,7 +318,7 @@ public final class LandmarkEngine {
     }
 
     /**
-     * 取得脸颊(腮红)顶点坐标
+     * Get cheek (blush) vertex coordinates
      * @param vertexPoints
      * @param faceIndex
      */
@@ -316,7 +327,7 @@ public final class LandmarkEngine {
     }
 
     /**
-     * 取得眉毛顶点坐标
+     * Get eyebrow vertex coordinates
      * @param vertexPoints
      * @param faceIndex
      */
@@ -325,7 +336,8 @@ public final class LandmarkEngine {
     }
 
     /**
-     * 取得眼睛(眼影、眼线等)顶点坐标，可参考assets目录下的 眼睛遮罩标注.jpg
+     * To get the vertex coordinates of the eyes (eye shadow, eyeliner, etc.),
+     * please refer to the eye mask label in the assets directory.jpg
      * @param vertexPoints
      * @param faceIndex
      */
@@ -335,76 +347,76 @@ public final class LandmarkEngine {
             return;
         }
 
-        // 关键点0 ~ 3，index = 0 ~ 3 4个
+        // Keypoint 0 ~ 3, index = 0 ~ 3 4 points
         for (int i = 0; i < 4; i++) {
             vertexPoints[i * 2] = mFaceArrays.get(faceIndex).vertexPoints[i * 2];
             vertexPoints[i * 2 + 1] = mFaceArrays.get(faceIndex).vertexPoints[i * 2 + 1];
         }
 
-        // 关键点29 ~ 33，index = 4 ~ 8 5个
+        // Key points 29 ~ 33, index = 4 ~ 8 5 points
         for (int i = 29; i < 34; i++) {
             vertexPoints[(i - 29 + 4) * 2] = mFaceArrays.get(faceIndex).vertexPoints[i * 2];
             vertexPoints[(i - 29 + 4) * 2 + 1] = mFaceArrays.get(faceIndex).vertexPoints[i * 2 + 1];
         }
 
-        // 关键点42 ~ 44，index = 9 ~ 11 3个
+        // Key points 42 ~ 44, index = 9 ~ 11 3 points
         for (int i = 42; i < 45; i++) {
             vertexPoints[(i - 42 + 9) * 2] = mFaceArrays.get(faceIndex).vertexPoints[i * 2];
             vertexPoints[(i - 42 + 9) * 2 + 1] = mFaceArrays.get(faceIndex).vertexPoints[i * 2 +  1];
         }
 
-        // 关键点52 ~ 73，index = 12 ~ 33 22个
+        // Key points 52 ~ 73, index = 12 ~ 33 22 points
         for (int i = 52; i < 74; i++) {
             vertexPoints[(i - 52 + 12) * 2] = mFaceArrays.get(faceIndex).vertexPoints[i * 2];
             vertexPoints[(i - 52 + 12) * 2 + 1] = mFaceArrays.get(faceIndex).vertexPoints[i * 2 + 1];
         }
 
-        // 右眼上中心
+        // upper center of right eye
         vertexPoints[34 * 2] = mFaceArrays.get(faceIndex).vertexPoints[75 * 2];
         vertexPoints[34 * 2 + 1] = mFaceArrays.get(faceIndex).vertexPoints[75 * 2 + 1];
 
-        // 右眼下中心
+        // Right eye lower center
         vertexPoints[35 * 2] = mFaceArrays.get(faceIndex).vertexPoints[76 * 2];
         vertexPoints[35 * 2 + 1] = mFaceArrays.get(faceIndex).vertexPoints[76 * 2 + 1];
 
-        // 关键点78
+        // key point 78
         vertexPoints[36 * 2] = mFaceArrays.get(faceIndex).vertexPoints[78 * 2];
         vertexPoints[36 * 2 + 1] = mFaceArrays.get(faceIndex).vertexPoints[78 * 2 + 1];
 
-        // 关键点79
+        // key point 79
         vertexPoints[37 * 2] = mFaceArrays.get(faceIndex).vertexPoints[79 * 2];
         vertexPoints[37 * 2 + 1] = mFaceArrays.get(faceIndex).vertexPoints[79 * 2 + 1];
 
-        // 左眉毛下方中心点
+        // Center point below left eyebrow
         vertexPoints[38 * 2] = (mFaceArrays.get(faceIndex).vertexPoints[3 * 2] + mFaceArrays.get(faceIndex).vertexPoints[44 * 2]) * 0.5f;
         vertexPoints[38 * 2 + 1] = (mFaceArrays.get(faceIndex).vertexPoints[3 * 2 + 1] + mFaceArrays.get(faceIndex).vertexPoints[44 * 2 + 1]) * 0.5f;
 
-        // 右眉毛下方中心点
+        // Center point below right eyebrow
         vertexPoints[39 * 2] = (mFaceArrays.get(faceIndex).vertexPoints[29 * 2] + mFaceArrays.get(faceIndex).vertexPoints[44 * 2]) * 0.5f;
         vertexPoints[39 * 2 + 1] = (mFaceArrays.get(faceIndex).vertexPoints[29 * 2 + 1] + mFaceArrays.get(faceIndex).vertexPoints[44 * 2 + 1]) * 0.5f;
     }
 
     /**
-     * 取得嘴唇(唇彩)顶点坐标
-     * @param vertexPoints  存放嘴唇顶点坐标
-     * @param faceIndex     人脸索引
+     * Get the vertex coordinates of lips (lip gloss)
+     * @param vertexPoints stores the lip vertex coordinates
+     * @param faceIndex face index
      */
     public synchronized void getLipsVertices(float[] vertexPoints, int faceIndex) {
-        // 嘴唇一共20个顶点，大小必须为40
+        // The lips have a total of 20 vertices, the size must be 40
         if (vertexPoints == null || vertexPoints.length < 40
                 || faceIndex >= mFaceArrays.size() || mFaceArrays.get(faceIndex) == null) {
             return;
         }
-        // 复制84 ~ 103共20个顶点坐标
+        // Copy 84 ~ 103 a total of 20 vertex coordinates
         for (int i = 0; i < 20; i++) {
-            // 顶点坐标
+            // vertex coordinates
             vertexPoints[i * 2] = mFaceArrays.get(faceIndex).vertexPoints[(84 + i) * 2];
             vertexPoints[i * 2 + 1] = mFaceArrays.get(faceIndex).vertexPoints[(84 + i) * 2 + 1];
         }
     }
 
     /**
-     * 取得亮眼需要的顶点坐标
+     * Get the vertex coordinates needed for bright eyes
      * @param vertexPoints
      * @param faceIndex
      */
@@ -413,7 +425,7 @@ public final class LandmarkEngine {
                 || faceIndex >= mFaceArrays.size() || mFaceArrays.get(faceIndex) == null) {
             return;
         }
-        // 眼睛边沿部分 index = 0 ~ 11
+        // edge of eye index = 0 ~ 11
         for (int i = 52; i < 64; i++) {
             vertexPoints[(i - 52) * 2] = mFaceArrays.get(faceIndex).vertexPoints[i * 2];
             vertexPoints[(i - 52) * 2 + 1] = mFaceArrays.get(faceIndex).vertexPoints[i * 2 + 1];
@@ -434,7 +446,7 @@ public final class LandmarkEngine {
     }
 
     /**
-     * 取得美牙需要的顶点坐标，嘴巴周围12个顶点
+     * Get the vertex coordinates needed for beauty teeth, 12 vertices around the mouth
      * @param vertexPoints
      * @param faceIndex
      */

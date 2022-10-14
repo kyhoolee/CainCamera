@@ -21,7 +21,7 @@
             android:layout_margin="@dimen/dp5"
             android:background="@android:color/transparent"
             android:textColor="@color/white"
-            android:text="@string/btn_camera"/>
+            android:text="Camera"/>
 
         <Button
             android:id="@+id/btn_edit_video"
@@ -30,7 +30,7 @@
             android:layout_margin="@dimen/dp5"
             android:background="@android:color/transparent"
             android:textColor="@color/white"
-            android:text="@string/btn_edit_video"/>
+            android:text="Edit video"/>
 
         <Button
             android:id="@+id/btn_edit_picture"
@@ -39,7 +39,7 @@
             android:layout_margin="@dimen/dp5"
             android:background="@android:color/transparent"
             android:textColor="@color/white"
-            android:text="@string/btn_edit_picture"/>
+            android:text="Edit picture"/>
 
         <Button
             android:id="@+id/btn_speed_record"
@@ -47,7 +47,7 @@
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
             android:textColor="@color/white"
-            android:text="@string/btn_speed_record"/>
+            android:text="Speed record"/>
 
         <Button
             android:id="@+id/btn_edit_music_merge"
@@ -56,7 +56,7 @@
             android:layout_margin="@dimen/dp5"
             android:background="@android:color/transparent"
             android:textColor="@color/white"
-            android:text="@string/btn_edit_music_merge"/>
+            android:text="Music merge"/>
 
         <Button
             android:id="@+id/btn_ff_media_record"
@@ -65,7 +65,7 @@
             android:layout_margin="@dimen/dp5"
             android:background="@android:color/transparent"
             android:textColor="@color/white"
-            android:text="@string/btn_ff_media_record"/>
+            android:text="FFMPEG record"/>
 
         <Button
             android:id="@+id/btn_music_player"
@@ -74,7 +74,7 @@
             android:layout_margin="@dimen/dp5"
             android:background="@android:color/transparent"
             android:textColor="@color/white"
-            android:text="@string/btn_music_player"/>
+            android:text="Music player"/>
 
         <Button
             android:id="@+id/btn_video_player"
@@ -83,7 +83,7 @@
             android:layout_margin="@dimen/dp5"
             android:background="@android:color/transparent"
             android:textColor="@color/white"
-            android:text="@string/btn_video_player"
+            android:text="Video player"
             android:visibility="visible"/>
 
       <Button
@@ -93,7 +93,7 @@
         android:layout_margin="@dimen/dp5"
         android:background="@android:color/transparent"
         android:textColor="@color/white"
-        android:text="@string/btn_duet_record"
+        android:text="Duet record"
         android:visibility="visible"/>
 
     </LinearLayout>

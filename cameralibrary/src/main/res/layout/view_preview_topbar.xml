@@ -68,7 +68,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
-            android:text="翻转" />
+            android:text="Flip" />
     </LinearLayout>
 
     <!-- 速度 -->
@@ -92,7 +92,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
-            android:text="速度关" />
+            android:text="Speed off" />
     </LinearLayout>
 
     <!-- 滤镜 -->
@@ -116,7 +116,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
-            android:text="滤镜" />
+            android:text="Filter" />
     </LinearLayout>
 
     <!--  设置  -->
@@ -139,7 +139,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
-            android:text="更多" />
+            android:text="More" />
     </LinearLayout>
 
 </merge>

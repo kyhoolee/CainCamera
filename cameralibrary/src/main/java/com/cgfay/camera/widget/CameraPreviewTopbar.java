@@ -198,7 +198,7 @@ public class CameraPreviewTopbar extends ConstraintLayout implements View.OnClic
      */
     public void setSpeedBarOpen(boolean open) {
         if (mTextSpeed != null) {
-            mTextSpeed.setText(open ? "速度开" : "速度关");
+            mTextSpeed.setText(open ? "Speed on" : "Speed off");
         }
     }
 

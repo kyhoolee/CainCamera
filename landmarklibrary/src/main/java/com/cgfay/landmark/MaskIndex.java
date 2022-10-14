@@ -1,7 +1,7 @@
 package com.cgfay.landmark;
 
 /**
- * 遮罩索引
+ * mask index
  */
 public final class MaskIndex {
 

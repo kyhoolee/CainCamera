@@ -66,6 +66,8 @@ public class CameraPreviewPresenter extends PreviewPresenter<CameraPreviewFragme
 
     private static final String TAG = "CameraPreviewPresenter";
 
+    private byte[] cacheFrame = null;
+
     // 当前索引
     private int mFilterIndex = 0;
 
@@ -502,7 +504,7 @@ public class CameraPreviewPresenter extends PreviewPresenter<CameraPreviewFragme
         mCameraRenderer.bindInputSurfaceTexture(surfaceTexture);
     }
 
-    // ---------------------------------- 相机预览数据回调 ------------------------------------------
+    // Camera preview data callback ------------------------------------------
     @Override
     public void onPreviewFrame(byte[] data) {
         Log.d(TAG, "onPreviewFrame: width - " + mCameraController.getPreviewWidth()
@@ -512,20 +514,20 @@ public class CameraPreviewPresenter extends PreviewPresenter<CameraPreviewFragme
                         mCameraController.getPreviewHeight());
     }
 
-    // ---------------------------------- 人脸检测完成回调 ------------------------------------------
+    // Face detection complete callback ------------------------------------------
     @Override
     public void onTrackingFinish() {
         Log.d(TAG, "onTrackingFinish: ");
         mCameraRenderer.requestRender();
     }
 
-    // ------------------------------ SurfaceTexture帧可用回调 --------------------------------------
+    // SurfaceTexture frame available callback --------------------------------------
     @Override
     public void onFrameAvailable(SurfaceTexture surfaceTexture) {
 //        mCameraRenderer.requestRender();
     }
 
-    // ---------------------------------- 录制与合成 start ------------------------------------------
+    // recording and compositing start ------------------------------------------
     @Override
     public void onRecordStart() {
         getTarget().hideOnRecording();

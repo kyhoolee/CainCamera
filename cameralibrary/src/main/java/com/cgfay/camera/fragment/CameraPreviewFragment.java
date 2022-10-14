@@ -73,54 +73,54 @@ public class CameraPreviewFragment extends Fragment implements View.OnClickListe
 
     private static final int ALBUM_LOADER_ID = 1;
 
-    // 预览参数
+    // Preview parameters
     private CameraParam mCameraParam;
 
-    // Fragment主页面
+    // Fragment main page
     private View mContentView;
-    // 预览部分
+    // preview section
     private CameraMeasureFrameLayout mPreviewLayout;
     private CameraTextureView mCameraTextureView;
-    // fps显示
+    // fps display
     private TextView mFpsView;
 
-    // 录制进度条
+    // Recording progress bar
     private RecordProgressView mProgressView;
-    // 倒计时控件
+    // countdown control
     private RecordCountDownView mCountDownView;
 
-    // 顶部topbar
+    // top topbar
     private CameraPreviewTopbar mPreviewTopbar;
 
-    // 速度选择条
+    // speed selection bar
     private RecordSpeedLevelBar mSpeedBar;
     private boolean mSpeedBarShowing;
-    // 贴纸按钮
+    // sticker button
     private LinearLayout mBtnStickers;
-    // 录制按钮
+    // record button
     private RecordButton mBtnRecord;
 
     private View mLayoutMedia;
-    // 媒体库按钮
+    // Media library button
     private ImageView mBtnMedia;
 
-    // 刪除布局
+    // delete layout
     private LinearLayout mLayoutDelete;
-    // 视频删除按钮
+    // Video delete button
     private Button mBtnDelete;
-    // 视频预览按钮
+    // video preview button
     private Button mBtnNext;
-    // 相机指示器
+    // camera indicator
     private CameraTabView mCameraTabView;
     private View mTabIndicator;
 
     private boolean mFragmentAnimating;
     private FrameLayout mFragmentContainer;
-    // 贴纸资源页面
+    // Sticker Resource Page
     private PreviewResourceFragment mResourcesFragment;
-    // 滤镜页面
+    // filter page
     private PreviewEffectFragment mEffectFragment;
-    // 更多设置界面
+    // More settings interface
     private PreviewSettingFragment mSettingFragment;
 
     private final Handler mMainHandler;
@@ -128,10 +128,10 @@ public class CameraPreviewFragment extends Fragment implements View.OnClickListe
 
     private CameraPreviewPresenter mPreviewPresenter;
 
-    // 本地缩略图加载器
+    // Local Thumbnail Loader
     private LoaderManager mLocalImageLoader;
 
-    // 当前对话框
+    // current dialog
     private Dialog mDialog;
 
     public CameraPreviewFragment() {
@@ -181,7 +181,7 @@ public class CameraPreviewFragment extends Fragment implements View.OnClickListe
     }
 
     /**
-     * 初始化页面
+     * Initialize the page
      * @param view
      */
     private void initView(View view) {
@@ -211,7 +211,7 @@ public class CameraPreviewFragment extends Fragment implements View.OnClickListe
     }
 
     /**
-     * 初始化顶部topbar
+     * Initialize the top topbar
      */
     private void initPreviewTopbar() {
         mPreviewTopbar = mContentView.findViewById(R.id.camera_preview_topbar);
@@ -243,7 +243,7 @@ public class CameraPreviewFragment extends Fragment implements View.OnClickListe
     }
 
     /**
-     * 初始化底部布局
+     * Initialize the bottom layout
      * @param view
      */
     private void initBottomLayout(@NonNull View view) {
@@ -273,7 +273,7 @@ public class CameraPreviewFragment extends Fragment implements View.OnClickListe
     }
 
     /**
-     * 初始化相机底部tab view
+     * Initialize the bottom tab view of the camera
      */
     private void initCameraTabView() {
         mTabIndicator = mContentView.findViewById(R.id.iv_tab_indicator);

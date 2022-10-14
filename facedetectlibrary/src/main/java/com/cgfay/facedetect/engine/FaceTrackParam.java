@@ -1,40 +1,39 @@
 package com.cgfay.facedetect.engine;
 
 import com.cgfay.facedetect.listener.FaceTrackerCallback;
-import com.megvii.facepp.sdk.Facepp;
+import com.google.mlkit.vision.facemesh.FaceMeshDetectorOptions;
+//import com.megvii.facepp.sdk.Facepp;
 
 /**
  * 人脸检测参数
  */
 public final class FaceTrackParam {
 
-    // 是否允许检测
-    boolean canFaceTrack = false;
-    // 旋转角度
+
+    // Rotation angle
     public int rotateAngle;
-    // 是否相机预览检测，true为预览检测，false为静态图片检测
-    public boolean previewTrack;
-    // 是否允许3D姿态角
+    // Whether camera preview detection, true is preview detection, false is still image detection
+//    public boolean previewTrack;
+    // Whether to allow 3D pose angle
     public boolean enable3DPose;
-    // 是否允许区域检测
+    // Whether to allow area detection
     public boolean enableROIDetect;
-    // 检测区域缩放比例
+    // Detection area scaling
     public float roiRatio;
-    // 是否允许106个关键点
-    public boolean enable106Points;
-    // 是否后置摄像头
+
+    // Whether the back camera
     public boolean isBackCamera;
-    // 是否允许人脸年龄检测
+    // Whether to allow face age detection
     public boolean enableFaceProperty;
-    // 是否允许多人脸检测
+    // Whether to allow multiple face detection
     public boolean enableMultiFace;
-    // 最小人脸大小
+    // Minimum face size
     public int minFaceSize;
-    // 检测间隔
+    // Detection interval
     public int detectInterval;
-    // 检测模式
+    // Detection mode
     public int trackMode;
-    // 检测回调
+    // detection callback
     public FaceTrackerCallback trackerCallback;
 
     private static class FaceParamHolder {
@@ -50,20 +49,21 @@ public final class FaceTrackParam {
     }
 
     /**
-     * 重置为初始状态
+     * reset to initial state
      */
     public void reset() {
-        previewTrack = true;
+//        previewTrack = true;
         enable3DPose = false;
         enableROIDetect = false;
         roiRatio = 0.8f;
-        enable106Points = true;
+//        enable106Points = true;
         isBackCamera = false;
         enableFaceProperty = false;
         enableMultiFace = true;
         minFaceSize = 200;
         detectInterval = 25;
-        trackMode = Facepp.FaceppConfig.DETECTION_MODE_TRACKING;
+        trackMode = FaceMeshDetectorOptions.FACE_MESH;
+                //Facepp.FaceppConfig.DETECTION_MODE_TRACKING;
         trackerCallback = null;
     }
 

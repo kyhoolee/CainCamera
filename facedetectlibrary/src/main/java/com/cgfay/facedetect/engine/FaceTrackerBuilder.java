@@ -29,7 +29,7 @@ public final class FaceTrackerBuilder {
      * @return
      */
     public FaceTrackerBuilder previewTrack(boolean previewTrack) {
-        mFaceTrackParam.previewTrack = previewTrack;
+        //mFaceTrackParam.previewTrack = previewTrack;
         return this;
     }
 

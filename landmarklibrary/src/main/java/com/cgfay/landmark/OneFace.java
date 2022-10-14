@@ -3,42 +3,42 @@ package com.cgfay.landmark;
 import android.util.SparseArray;
 
 /**
- * 一个人的关键点数据对象
+ * A person's keypoint data object
  */
 public class OneFace {
-    // 性别标识
-    public static final int GENDER_MAN = 0;
-    public static final int GENDER_WOMAN = 1;
-    // 置信度
-    public float confidence;
-    // 俯仰角(绕x轴旋转)
+
+//    public static final int GENDER_MAN = 0;
+//    public static final int GENDER_WOMAN = 1;
+//    public float confidence;
+
+    // Pitch angle (rotate around the x-axis)
     public float pitch;
-    // 偏航角(绕y轴旋转)
+    // Yaw angle (rotation around the y-axis)
     public float yaw;
-    // 翻滚角(绕z轴旋转)
+    // roll angle (rotation around the z-axis)
     public float roll;
-    // 年龄
-    public float age;
-    // 性别
-    public int gender;
-    // 顶点坐标
+
+//    public float age;
+//    public int gender;
+
+    // vertex coordinates
     public float[] vertexPoints;
 
     @Override
     protected OneFace clone() {
         OneFace copy = new OneFace();
-        copy.confidence = this.confidence;
+//        copy.confidence = this.confidence;
         copy.pitch = this.pitch;
         copy.yaw = this.yaw;
         copy.roll = this.roll;
-        copy.age = this.age;
-        copy.gender = this.gender;
+//        copy.age = this.age;
+//        copy.gender = this.gender;
         copy.vertexPoints = this.vertexPoints.clone();
         return copy;
     }
 
     /**
-     * 复制数据
+     * copy data
      * @param origin
      * @return
      */
@@ -54,7 +54,7 @@ public class OneFace {
     }
 
     /**
-     * 复制数据
+     * copy data
      * @param origin
      * @return
      */
