@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 普通选择器
+ * normal selector
  */
 public class NormalMediaSelector implements OnMediaSelector {
 

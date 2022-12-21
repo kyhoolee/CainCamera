@@ -4,15 +4,18 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * 特效类型类型
+ * type of effect
  */
 public class EffectType implements Parcelable {
 
-    private EffectMimeType mimeType;    // 特效类型，滤镜特效、转场特效以及时间特效
+    private EffectMimeType mimeType;
+    // Types of special effects, filter effects, transition effects and time effects
 
-    private String mThumb;  // 缩略图路径
-    private String mName;   // 特效名
-    private int id;         // 特效id，暂时没啥用。本来是预留做动态处理的id。
+    private String mThumb;  // Thumbnail path
+    private String mName;   // Effect name
+    private int id;
+    // The special effect id is useless for the time being.
+    // It was originally an id reserved for dynamic processing.
 
     public EffectType(EffectMimeType mimeType, String name, int id, String thumbPath) {
         this.mimeType = mimeType;
@@ -39,6 +42,12 @@ public class EffectType implements Parcelable {
         dest.writeString(mName);
         dest.writeString(mThumb);
         dest.writeParcelable(mimeType, flags);
+    }
+
+    @Override
+    public String toString() {
+        return "(id=" + id + ", name=" + mName
+                + ", mThumb=" + mThumb + ",mimeType=" + mimeType + ")";
     }
 
     public EffectMimeType getMimeType() {

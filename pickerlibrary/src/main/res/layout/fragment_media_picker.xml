@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/bg_picker_fragment">
 
-    <!-- 相册选项 -->
+    <!-- Album options -->
     <RelativeLayout
         android:id="@+id/layout_album"
         android:layout_width="match_parent"
@@ -35,7 +35,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/dp18"
                 android:textColor="@color/black"
-                android:text="所有照片"/>
+                android:text="All"/>
 
             <ImageView
                 android:id="@+id/iv_album_indicator"
@@ -60,7 +60,7 @@
 
     </RelativeLayout>
 
-    <!-- 媒体类型TabLayout -->
+    <!-- Media type TabLayout -->
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tl_media_title"
         android:layout_width="match_parent"
@@ -78,7 +78,7 @@
         app:tabTextAppearance="@style/AlbumTitleTextStyle">
     </com.google.android.material.tabs.TabLayout>
 
-    <!-- 媒体缩略图列表 -->
+    <!-- Media Thumbnail List -->
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/vp_media_thumbnail"
         android:layout_width="match_parent"
@@ -86,14 +86,14 @@
         android:layout_below="@+id/tl_media_title">
     </androidx.viewpager.widget.ViewPager>
 
-    <!-- 相册列表容器 -->
+    <!-- Album list container -->
     <LinearLayout
         android:id="@+id/ll_album_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/layout_album"
         android:visibility="gone">
-        <!-- 相册列表页面 -->
+        <!-- Album list page -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_album_list"
             android:layout_width="match_parent"

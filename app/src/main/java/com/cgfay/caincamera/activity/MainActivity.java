@@ -145,7 +145,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     /**
-     * 初始化动态贴纸、滤镜等资源
+     * Initialize dynamic stickers, filters and other resources
      */
     private void initResources() {
         new Thread(() -> {
@@ -156,7 +156,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     /**
-     * 打开预览页面
+     * Open the preview page
      */
     private void previewCamera() {
         if (PermissionUtils.permissionChecking(this, Manifest.permission.CAMERA)) {
@@ -184,7 +184,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     /**
-     * 扫描媒体库
+     * Scan media library
      * @param enableImage
      * @param enableVideo
      */
@@ -197,7 +197,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     /**
-     * 音视频混合
+     * Merge music
      */
     private void musicMerge() {
         MediaPicker.from(this)
@@ -220,7 +220,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     /**
-     * 使用FFmpeg 录制视频
+     * Record video with FFmpeg
      */
     private void ffmpegRecord() {
         startActivity(new Intent(MainActivity.this, FFMediaRecordActivity.class));
@@ -266,8 +266,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     /**
-     * 模拟同框录制
-     * @param mediaData 媒体数据
+     * Simulate same-frame recording
+     * @param mediaData
      */
     private void onDuetRecord(@NonNull MediaData mediaData) {
         Intent intent = new Intent(MainActivity.this, DuetRecordActivity.class);

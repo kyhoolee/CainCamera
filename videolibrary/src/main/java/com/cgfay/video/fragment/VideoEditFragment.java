@@ -53,7 +53,7 @@ import com.cgfay.video.widget.WaveCutView;
 import java.io.IOException;
 
 /**
- * 特效编辑页面
+ * Effects editing page
  */
 public class VideoEditFragment extends Fragment implements View.OnClickListener {
 
@@ -61,56 +61,56 @@ public class VideoEditFragment extends Fragment implements View.OnClickListener 
 
     private Activity mActivity;
 
-    private String mVideoPath;                      // 视频流路径
-    private String mMusicPath;                      // 背景音乐路径
-    private float mSourceVolumePercent = 0.5f;      // 源音量百分比
-    private float mBackgroundVolumePercent = 0.5f;  // 背景音乐音量百分比
-    private long mBackgroundDuration;               // 背景音乐时长，ms
+    private String mVideoPath;                      // video stream path
+    private String mMusicPath;                      // background music path
+    private float mSourceVolumePercent = 0.5f;      // Source volume percentage
+    private float mBackgroundVolumePercent = 0.5f;  // Background music volume percentage
+    private long mBackgroundDuration;               // background music duration，ms
 
     private View mContentView;
-    // 播放控件
+    // Playback controls
     private RelativeLayout mLayoutPlayer;
     private VideoTextureView mVideoPlayerView;
     private ImageView mIvVideoPlay;
 
-    // 特效选择栏
-    private LinearLayout mLayoutEffect;             // 特效布局
-    private TextView mTvVideoCurrent;               // 当前位置
-    private EffectSelectedSeekBar mSbEffectSelected;// 带特效选中的进度条
-    private TextView mTvVideoDuration;              // 视频时长
-    private TextView mTvEffectTips;                 // 特效提示
-    private TextView mTvEffectCancel;               // 撤销按钮
-    private RecyclerView mListEffectView;           // 特效列表
-    private RecyclerView mListEffectCategoryView;   // 特效目录列表
-    private boolean mEffectShowing;                 // 特效页面显示状态
-    private VideoEffectAdapter mEffectAdapter;      // 特效列表适配器
-    private VideoEffectCategoryAdapter mEffectCategoryAdapter; // 特效目录列表适配器
+    // Effect selection bar
+    private LinearLayout mLayoutEffect;             // Effects layout
+    private TextView mTvVideoCurrent;               // current position
+    private EffectSelectedSeekBar mSbEffectSelected;// Progress bar with special effects selected
+    private TextView mTvVideoDuration;              // video duration
+    private TextView mTvEffectTips;                 // Special effect tips
+    private TextView mTvEffectCancel;               // undo button
+    private RecyclerView mListEffectView;           // Effect list
+    private RecyclerView mListEffectCategoryView;   // Effects directory list
+    private boolean mEffectShowing;                 // Effect page display status
+    private VideoEffectAdapter mEffectAdapter;      // Effects List Adapter
+    private VideoEffectCategoryAdapter mEffectCategoryAdapter; // Effects Directory Listing Adapter
 
-    // 顶部控制栏
+    // top control bar
     private View mLayoutTop;
-    // 顶部子控制栏
+    // top sub control bar
     private RelativeLayout mLayoutSubTop;
-    // 底部控制栏
+    // Bottom control bar
     private View mLayoutBottom;
-    // 底部子控制栏
+    // Bottom sub control bar
     private FrameLayout mLayoutSubBottom;
 
-    // 音量调节页面
+    // Volume adjustment page
     private View mLayoutVolumeChange;
     private SeekBar mSbBackgroundVolume;
 
-    // 音乐裁剪页面
+    // music clipping page
     private View mLayoutCutMusic;
     private WaveCutView mWaveCutView;
     private TextView mTvMusicCurrent;
     private TextView mTvMusicDuration;
 
-    // 滤镜列表
+    // Filter list
     private RecyclerView mListFilterView;
     private VideoFilterAdapter mFilterAdapter;
 
 
-    // 播放器
+    // player
     private MediaPlayer mAudioPlayer;
     private CainMediaPlayer mCainMediaPlayer;
     private AudioManager mAudioManager;
@@ -152,7 +152,7 @@ public class VideoEditFragment extends Fragment implements View.OnClickListener 
             mAudioManager.requestAudioFocus(null, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN);
         }
 
-        // 播放器显示控件
+        // Player display controls
         mLayoutPlayer = mContentView.findViewById(R.id.layout_player);
         mVideoPlayerView = mContentView.findViewById(R.id.video_player_view);
         mVideoPlayerView.setSurfaceTextureListener(mSurfaceTextureListener);
@@ -171,7 +171,9 @@ public class VideoEditFragment extends Fragment implements View.OnClickListener 
         }
         mVideoPlayerView.setLayoutParams(playerParams);
 
-        // 特效控制栏
+        /////////////////////////////////////////////////////////
+        // 1. Effect features
+        // Effects control bar
         mLayoutEffect = mContentView.findViewById(R.id.layout_effect);
         mTvVideoCurrent = mContentView.findViewById(R.id.tv_video_current);
         mSbEffectSelected = mContentView.findViewById(R.id.sb_select_effect);
@@ -183,14 +185,18 @@ public class VideoEditFragment extends Fragment implements View.OnClickListener 
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(mActivity);
         ((LinearLayoutManager) layoutManager).setOrientation(LinearLayoutManager.HORIZONTAL);
-        // 特效列表
+
+
+        // Effect list
         mListEffectView = mContentView.findViewById(R.id.list_video_edit_effect);
         mListEffectView.setLayoutManager(layoutManager);
-        mEffectAdapter = new VideoEffectAdapter(mActivity, EffectFilterHelper.getInstance().getEffectFilterData());
+        mEffectAdapter = new VideoEffectAdapter(
+                mActivity,
+                EffectFilterHelper.getInstance().getEffectFilterData());
         mEffectAdapter.setOnEffectChangeListener(mEffectChangeListener);
         mListEffectView.setAdapter(mEffectAdapter);
 
-        // 特效目录列表
+        // Effects directory list
         mListEffectCategoryView = mContentView.findViewById(R.id.list_video_edit_effect_category);
         RecyclerView.LayoutManager manager = new LinearLayoutManager(mActivity);
         ((LinearLayoutManager) manager).setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -199,24 +205,26 @@ public class VideoEditFragment extends Fragment implements View.OnClickListener 
         mEffectCategoryAdapter.setOnEffectCategoryChangeListener(mEffectCategoryChangeListener);
         mListEffectCategoryView.setAdapter(mEffectCategoryAdapter);
 
-        // 顶部控制栏
+        // Effects directory list
         mLayoutTop = mContentView.findViewById(R.id.layout_top);
         mContentView.findViewById(R.id.btn_edit_back).setOnClickListener(this);
         mContentView.findViewById(R.id.btn_select_music).setOnClickListener(this);
 
-        // 顶部子控制栏
+        /////////////////////////////////////////////////////////
+        // 2. Control bar
+        // Top sub control bar
         mLayoutSubTop = mContentView.findViewById(R.id.layout_sub_top);
         mContentView.findViewById(R.id.btn_sub_cancel).setOnClickListener(this);
         mContentView.findViewById(R.id.btn_sub_save).setOnClickListener(this);
 
-        // 底部控制栏
+        // Bottom control bar
         mLayoutBottom = mContentView.findViewById(R.id.layout_bottom);
         mContentView.findViewById(R.id.btn_edit_effect).setOnClickListener(this);
         mContentView.findViewById(R.id.btn_edit_filter).setOnClickListener(this);
         mContentView.findViewById(R.id.btn_edit_stickers).setOnClickListener(this);
         mContentView.findViewById(R.id.btn_edit_next).setOnClickListener(this);
 
-        // 底部子控制栏
+        // Bottom sub control bar
         mLayoutSubBottom = mContentView.findViewById(R.id.layout_sub_bottom);
     }
 
@@ -326,7 +334,7 @@ public class VideoEditFragment extends Fragment implements View.OnClickListener 
         } else if (id == R.id.iv_cut_music_save) {
             showCutMusicLayout(false);
         } else if (id == R.id.tv_video_edit_effect_cancel) {   // 撤销特效
-            // TODO 撤销上一个特效
+            // TODO Undo the last effect
         }
     }
 
@@ -353,7 +361,7 @@ public class VideoEditFragment extends Fragment implements View.OnClickListener 
     }
 
     /**
-     * 是否显示音量调节布局
+     * Whether to show the volume adjustment layout
      * @param showSubView
      */
     private void showVolumeChangeLayout(boolean showSubView) {
@@ -385,7 +393,7 @@ public class VideoEditFragment extends Fragment implements View.OnClickListener 
     }
 
     /**
-     * 是否显示剪辑音乐布局
+     * Whether to show clip music layout
      * @param showSubView
      */
     private void showCutMusicLayout(boolean showSubView) {
@@ -434,18 +442,24 @@ public class VideoEditFragment extends Fragment implements View.OnClickListener 
     }
 
     /**
-     * 显示特效页面
+     * Show effects page
      * @param showSubView
      */
     private void showChangeEffectLayout(boolean showSubView) {
         mEffectShowing = showSubView;
+
+
         if (showSubView) {
+            // 1. Animating show effect list - in mLayoutEffect
+
             AnimatorSet animatorSet = new AnimatorSet();
-            // 特效页面显示动画
+            // Effects page shows animation
             ValueAnimator effectShowAnimator = ValueAnimator.ofFloat(1f, 0f);
             effectShowAnimator.setDuration(400);
-            final LinearLayout.LayoutParams effectParams = (LinearLayout.LayoutParams) mLayoutEffect.getLayoutParams();
-            final LinearLayout.LayoutParams playerParams = (LinearLayout.LayoutParams) mLayoutPlayer.getLayoutParams();
+            final LinearLayout.LayoutParams effectParams =
+                    (LinearLayout.LayoutParams) mLayoutEffect.getLayoutParams();
+            final LinearLayout.LayoutParams playerParams =
+                    (LinearLayout.LayoutParams) mLayoutPlayer.getLayoutParams();
             mPlayViewWidth = mLayoutPlayer.getWidth();
             mPlayViewHeight = mLayoutPlayer.getHeight();
             final int minPlayViewHeight = mPlayViewHeight - DensityUtils.dp2px(mActivity, 200);
@@ -453,10 +467,24 @@ public class VideoEditFragment extends Fragment implements View.OnClickListener 
             effectShowAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                 @Override
                 public void onAnimationUpdate(ValueAnimator animation) {
-                    effectParams.bottomMargin = (int) (-DensityUtils.dp2px(mActivity, 200) * (float)animation.getAnimatedValue());
+                    effectParams.bottomMargin = (int) (-DensityUtils.dp2px(mActivity, 200)
+                            * (float)animation.getAnimatedValue());
                     mLayoutEffect.setLayoutParams(effectParams);
-                    playerParams.width = (int) ((minPlayViewHeight + ((mPlayViewHeight - minPlayViewHeight)* (float)animation.getAnimatedValue())) * playerViewScale);
-                    playerParams.bottomMargin = (int) (DensityUtils.dp2px(mActivity, 18) * (1f - (float)animation.getAnimatedValue()));
+                    playerParams.width = (int) (
+                            (
+                                    minPlayViewHeight
+                                    + (
+                                            (mPlayViewHeight - minPlayViewHeight)
+                                                    * (float)animation.getAnimatedValue()
+                                    )
+                            )
+                                    * playerViewScale
+                    );
+                    playerParams.bottomMargin = (int) (
+                            DensityUtils.dp2px(mActivity, 18)
+                                    * (1f - (float)animation.getAnimatedValue()
+                            )
+                    );
                     mLayoutPlayer.setLayoutParams(playerParams);
                 }
             });
@@ -469,9 +497,10 @@ public class VideoEditFragment extends Fragment implements View.OnClickListener 
 
             pausePlayer();
         } else {
+            // 2. Animating hide effect list - in mLayoutEffect
 
             AnimatorSet animatorSet = new AnimatorSet();
-            // 特效页面退出动画
+            // Effects page exit animation
             ValueAnimator effectExitAnimator = ValueAnimator.ofFloat(0f, 1f);
             effectExitAnimator.setDuration(400);
             final LinearLayout.LayoutParams effectParams = (LinearLayout.LayoutParams) mLayoutEffect.getLayoutParams();
@@ -481,10 +510,20 @@ public class VideoEditFragment extends Fragment implements View.OnClickListener 
             effectExitAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                 @Override
                 public void onAnimationUpdate(ValueAnimator animation) {
-                    effectParams.bottomMargin = (int) (-DensityUtils.dp2px(mActivity, 200) * (float)animation.getAnimatedValue());
+                    effectParams.bottomMargin = (int) (-DensityUtils.dp2px(mActivity, 200)
+                            * (float)animation.getAnimatedValue()
+                    );
                     mLayoutEffect.setLayoutParams(effectParams);
-                    playerParams.width = (int) ((minPlayViewHeight + ((mPlayViewHeight - minPlayViewHeight)* (float)animation.getAnimatedValue())) * playerViewScale);
-                    playerParams.bottomMargin = (int) (DensityUtils.dp2px(mActivity, 18) * (1f - (float)animation.getAnimatedValue()));
+                    playerParams.width = (int) (
+                            (minPlayViewHeight
+                                    + ((mPlayViewHeight - minPlayViewHeight)
+                                    * (float)animation.getAnimatedValue())
+                            )
+                                    * playerViewScale
+                    );
+                    playerParams.bottomMargin = (int) (DensityUtils.dp2px(mActivity, 18)
+                            * (1f - (float)animation.getAnimatedValue())
+                    );
                     mLayoutPlayer.setLayoutParams(playerParams);
                 }
             });
@@ -496,7 +535,7 @@ public class VideoEditFragment extends Fragment implements View.OnClickListener 
     }
 
     /**
-     * 切换特效目录
+     * Switch effect directory
      * @param type
      */
     private void changeEffectCategoryView(EffectMimeType type) {
@@ -512,7 +551,7 @@ public class VideoEditFragment extends Fragment implements View.OnClickListener 
     }
 
     /**
-     * 显示选择滤镜页面
+     * Display the Select Filter page
      * @param showSubView
      */
     private void showSelectFilterLayout(boolean showSubView) {
@@ -541,7 +580,7 @@ public class VideoEditFragment extends Fragment implements View.OnClickListener 
     }
 
     /**
-     * 选择贴纸页面
+     * Select sticker page
      * @param showSubView
      */
     private void showSelectStickersLayout(boolean showSubView) {
@@ -553,7 +592,7 @@ public class VideoEditFragment extends Fragment implements View.OnClickListener 
     }
 
     /**
-     * 保存所有变更，合成视频
+     * Save all changes, composite video
      */
     private void saveAllChange() {
 
@@ -592,7 +631,7 @@ public class VideoEditFragment extends Fragment implements View.OnClickListener 
     }
 
     /**
-     * 设置视频流路径
+     * Set the video stream path
      * @param videoPath
      */
     public void setVideoPath(String videoPath) {
@@ -600,7 +639,7 @@ public class VideoEditFragment extends Fragment implements View.OnClickListener 
     }
 
     /**
-     * 设置背景音乐路径
+     * Set the background music path
      * @param musicPath
      * @param duration
      */
@@ -636,7 +675,7 @@ public class VideoEditFragment extends Fragment implements View.OnClickListener 
         }
     }
 
-    // 视频显示监听
+    // video display monitor
     private SurfaceTexture mSurfaceTexture;
     private Surface mSurface;
     private TextureView.SurfaceTextureListener mSurfaceTextureListener = new TextureView.SurfaceTextureListener() {
@@ -667,7 +706,7 @@ public class VideoEditFragment extends Fragment implements View.OnClickListener 
     };
 
     /**
-     * 打开视频播放器
+     * Open the video player
      */
     private void openMediaPlayer() {
         mContentView.setKeepScreenOn(true);
@@ -743,7 +782,7 @@ public class VideoEditFragment extends Fragment implements View.OnClickListener 
     }
 
     /**
-     * 带特效选中的滑动监听
+     * Sliding monitor with special effects selection
      */
     private EffectSelectedSeekBar.OnSeekBarChangeListener mOnSeekBarChangeListener = new EffectSelectedSeekBar.OnSeekBarChangeListener() {
         @Override
@@ -766,7 +805,7 @@ public class VideoEditFragment extends Fragment implements View.OnClickListener 
 
 
     /**
-     * 音量调节监听器
+     * volume adjustment monitor
      */
     private SeekBar.OnSeekBarChangeListener mVolumeChangeListener = new SeekBar.OnSeekBarChangeListener() {
         @Override
@@ -801,7 +840,7 @@ public class VideoEditFragment extends Fragment implements View.OnClickListener 
     };
 
     /**
-     * 裁剪音乐监听器
+     * cropped music monitor
      */
     private WaveCutView.OnDragListener mCutMusicListener = new WaveCutView.OnDragListener() {
         @Override
@@ -818,7 +857,7 @@ public class VideoEditFragment extends Fragment implements View.OnClickListener 
     };
 
     /**
-     * 滤镜列表改变回调
+     * Filter list change callback
      */
     private VideoFilterAdapter.OnFilterChangeListener mFilterChangeListener = new VideoFilterAdapter.OnFilterChangeListener() {
         @Override
@@ -828,7 +867,7 @@ public class VideoEditFragment extends Fragment implements View.OnClickListener 
     };
 
     /**
-     * 特效列表切换
+     * Effect list toggle
      */
     private VideoEffectAdapter.OnEffectChangeListener mEffectChangeListener = new VideoEffectAdapter.OnEffectChangeListener() {
         @Override
@@ -840,7 +879,7 @@ public class VideoEditFragment extends Fragment implements View.OnClickListener 
     };
 
     /**
-     * 特效目录切换
+     * special effects directory switch
      */
     private VideoEffectCategoryAdapter.OnEffectCategoryChangeListener mEffectCategoryChangeListener = new VideoEffectCategoryAdapter.OnEffectCategoryChangeListener() {
         @Override
@@ -858,7 +897,7 @@ public class VideoEditFragment extends Fragment implements View.OnClickListener 
     };
 
     /**
-     * 页面操作监听器
+     * page action listener
      */
     public interface OnSelectMusicListener {
 
@@ -866,7 +905,7 @@ public class VideoEditFragment extends Fragment implements View.OnClickListener 
     }
 
     /**
-     * 添加页面操作监听器
+     * Add page action listener
      * @param listener
      */
     public void setOnSelectMusicListener(OnSelectMusicListener listener) {

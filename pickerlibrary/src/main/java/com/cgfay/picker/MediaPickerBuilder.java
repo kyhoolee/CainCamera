@@ -23,7 +23,7 @@ public final class MediaPickerBuilder {
     }
 
     /**
-     * 是否显示拍照item列表
+     * Whether to display the photo item list
      * @param show
      * @return
      */
@@ -33,7 +33,7 @@ public final class MediaPickerBuilder {
     }
 
     /**
-     * 是否显示视频
+     * whether to show video
      * @param show
      * @return
      */
@@ -43,7 +43,7 @@ public final class MediaPickerBuilder {
     }
 
     /**
-     * 是否显示图片
+     * whether to show pictures
      * @param show
      * @return
      */
@@ -53,7 +53,7 @@ public final class MediaPickerBuilder {
     }
 
     /**
-     * 一行的item数目
+     * number of items in a row
      * @param spanCount
      * @return
      */
@@ -66,7 +66,7 @@ public final class MediaPickerBuilder {
     }
 
     /**
-     * 分割线大小
+     * dividing line size
      * @param spaceSize
      * @return
      */
@@ -79,7 +79,7 @@ public final class MediaPickerBuilder {
     }
 
     /**
-     * 设置是否存在边沿分割线
+     * Set whether there is an edge dividing line
      * @param hasEdge
      * @return
      */
@@ -94,7 +94,7 @@ public final class MediaPickerBuilder {
     }
 
     /**
-     * 图片加载器
+     * image loader
      * @param loader
      * @return
      */
@@ -104,7 +104,7 @@ public final class MediaPickerBuilder {
     }
 
     /**
-     * 设置媒体选择监听器
+     * set media selection listener
      * @param selector
      */
     public MediaPickerBuilder setMediaSelector(OnMediaSelector selector) {
@@ -113,7 +113,7 @@ public final class MediaPickerBuilder {
     }
 
     /**
-     * 显示Fragment
+     * Show Fragment
      */
     public void show() {
         FragmentActivity activity = mMediaPicker.getActivity();

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- 选图器标题tab文字样式 -->
+    <!-- Picker title tab text style -->
     <style name="AlbumTitleTextStyle">
         <item name="android:textSize">@dimen/dp15</item>
         <item name="android:textStyle">bold</item>

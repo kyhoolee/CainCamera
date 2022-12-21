@@ -13,7 +13,7 @@ import com.cgfay.uitls.dialog.DialogBuilder;
 import com.cgfay.utilslibrary.R;
 
 /**
- * 预览页面返回对话框
+ * Preview page return dialog
  */
 public class BackPressedDialogFragment extends DialogFragment {
 
@@ -45,9 +45,9 @@ public class BackPressedDialogFragment extends DialogFragment {
                 .setCanceledOnTouchOutside(true)
                 .setText(R.id.tv_dialog_title, resId == -1 ? R.string.back_pressed_message : resId)
                 .setDismissOnClick(R.id.btn_dialog_cancel, true)
-                .setText(R.id.btn_dialog_cancel, "取消")
+                .setText(R.id.btn_dialog_cancel, "Cancel")
                 .setDismissOnClick(R.id.btn_dialog_ok, true)
-                .setText(R.id.btn_dialog_ok, "确定")
+                .setText(R.id.btn_dialog_ok, "Sure")
                 .setOnClickListener(R.id.btn_dialog_ok, v -> {
                     if (parent != null) {
                         Activity activity = parent.getActivity();

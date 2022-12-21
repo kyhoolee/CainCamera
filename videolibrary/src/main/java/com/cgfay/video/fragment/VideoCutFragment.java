@@ -53,24 +53,24 @@ public class VideoCutFragment extends Fragment implements View.OnClickListener {
     private Activity mActivity;
 
     private View mContentView;
-    // 播放控件
+    // Playback controls
     private VideoTextureView mVideoPlayerView;
-    // 倍速选择条
+    // Speed selection bar
     private VideoSpeedLevelBar mVideoSpeedLevelBar;
-    // 裁剪Bar
+    // Crop Bar
     private VideoCutViewBar mVideoCutViewBar;
-    // 选中提示
+    // Check prompt
     private TextView mTextVideoCropSelected;
 
-    // 执行进度提示
+    // Execution progress prompt
     private LinearLayout mLayoutProgress;
-    // 圆形进度条
+    // circular progress bar
     private CircleProgressView mCvCropProgress;
     private TextView mTvCropProgress;
 
     private VideoSpeed mVideoSpeed = VideoSpeed.SPEED_L2;
 
-    // 毫秒
+    // millisecond
     private long mCutStart = 0;
     private long mCutRange = 15000;
     private long mVideoDuration;
@@ -119,7 +119,7 @@ public class VideoCutFragment extends Fragment implements View.OnClickListener {
         mVideoPlayerView = mContentView.findViewById(R.id.video_player_view);
         mVideoPlayerView.setSurfaceTextureListener(mSurfaceTextureListener);
 
-        // 视频容器
+        // video container
         View layoutVideo = mContentView.findViewById(R.id.layout_video);
         ConstraintLayout.LayoutParams videoParams = (ConstraintLayout.LayoutParams) layoutVideo.getLayoutParams();
         if (DisplayUtils.isFullScreenDevice(mActivity)) {
@@ -254,7 +254,7 @@ public class VideoCutFragment extends Fragment implements View.OnClickListener {
     }
 
     /**
-     * 旋转视频
+     * rotate video
      */
     private boolean mRotating;
     private float mCurrentRotate;
@@ -262,17 +262,17 @@ public class VideoCutFragment extends Fragment implements View.OnClickListener {
         if (mRotating) {
             return;
         }
-        // 原始宽高
+        // Original width and height
         final int width = mVideoPlayerView.getWidth();
         final int height = mVideoPlayerView.getHeight();
 
-        // 添加旋转动画
+        // Add rotation animation
         AnimatorSet animatorSet = new AnimatorSet();
         ValueAnimator animator = ValueAnimator.ofFloat(0f, 1f);
         animator.setDuration(400);
         animator.addUpdateListener(animation -> {
             float rotate = (float)animation.getAnimatedValue() * 90;
-            // 设置旋转矩阵
+            // set rotation matrix
             setupMatrix(width, height, (int) (mCurrentRotate + rotate));
         });
         animator.addListener(new AnimatorListenerAdapter() {
@@ -445,7 +445,7 @@ public class VideoCutFragment extends Fragment implements View.OnClickListener {
     };
 
     /**
-     * 剪辑视频
+     * clip video
      */
     private void cutVideo() {
         mLayoutProgress.setVisibility(View.VISIBLE);
@@ -462,7 +462,11 @@ public class VideoCutFragment extends Fragment implements View.OnClickListener {
             duration = mVideoDuration;
         }
         String videoPath = VideoEditorUtil.createPathInBox(mActivity, "mp4");
-        mMediaEditor.videoSpeedCut(mVideoPath, videoPath, start, duration, mVideoSpeed.getSpeed(),
+        mMediaEditor.videoSpeedCut(
+                mVideoPath, videoPath,
+                start, duration,
+                mVideoSpeed.getSpeed(),
+
                 new CainMediaEditor.OnEditProcessListener() {
                     @Override
                     public void onProcessing(int percent) {
@@ -476,7 +480,7 @@ public class VideoCutFragment extends Fragment implements View.OnClickListener {
                     public void onSuccess() {
                         mActivity.runOnUiThread(() -> {
                             mLayoutProgress.setVisibility(View.GONE);
-                            // 成功则释放播放器并跳转至编辑页面
+                            // If successful, release the player and jump to the editing page
                             if (FileUtils.fileExists(videoPath)) {
                                 if (mMediaEditor != null) {
                                     mMediaEditor.release();

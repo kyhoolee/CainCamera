@@ -3,6 +3,8 @@ package com.cgfay.video.adapter;
 import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 滤镜列表适配器
+ * Filter List Adapter
  */
 public class VideoEffectAdapter extends RecyclerView.Adapter<VideoEffectAdapter.ImageHolder> {
 
@@ -32,7 +34,7 @@ public class VideoEffectAdapter extends RecyclerView.Adapter<VideoEffectAdapter.
     }
 
     /**
-     * 切换特效数据
+     * Toggle effect data
      * @param effectTypeList
      */
     public void changeEffectData(List<EffectType> effectTypeList) {
@@ -55,7 +57,7 @@ public class VideoEffectAdapter extends RecyclerView.Adapter<VideoEffectAdapter.
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ImageHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull ImageHolder holder, int position) {
         if (mEffectList.get(position).getThumb().startsWith("assets://")) {
             holder.effectImage.setImageBitmap(BitmapUtils.getImageFromAssetsFile(mContext,
                     mEffectList.get(position).getThumb().substring("assets://".length())));
@@ -63,6 +65,7 @@ public class VideoEffectAdapter extends RecyclerView.Adapter<VideoEffectAdapter.
             holder.effectImage.setImageBitmap(BitmapUtils.getBitmapFromFile(mEffectList.get(position).getThumb()));
         }
         holder.effectName.setText(mEffectList.get(position).getName());
+
         holder.effectRoot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,6 +79,11 @@ public class VideoEffectAdapter extends RecyclerView.Adapter<VideoEffectAdapter.
                 if (mEffectChangeListener != null) {
                     mEffectChangeListener.onEffectChanged(mEffectList.get(position));
                 }
+
+                Log.e("video_effect", "Click on effect: "
+                        + mSelected
+                        + " " + mEffectList.get(mSelected)
+                );
             }
         });
     }
@@ -86,11 +94,11 @@ public class VideoEffectAdapter extends RecyclerView.Adapter<VideoEffectAdapter.
     }
 
     class ImageHolder extends RecyclerView.ViewHolder {
-        // 根布局
+        // root layout
         public LinearLayout effectRoot;
-        // 预览缩略图
+        // preview thumbnail
         public ImageView effectImage;
-        // 预览文字
+        // preview text
         public TextView effectName;
 
         public ImageHolder(View itemView) {
@@ -99,7 +107,7 @@ public class VideoEffectAdapter extends RecyclerView.Adapter<VideoEffectAdapter.
     }
 
     /**
-     * 特效改变监听器
+     * Effect change listener
      */
     public interface OnEffectChangeListener {
 

@@ -8,10 +8,10 @@ import android.os.Parcelable;
  */
 public enum EffectMimeType implements Parcelable {
 
-    FILTER("滤镜", 0),      // 滤镜特效
-    TRANSITION("转场", 1),  // 转场特效
-    MULTIFRAME("分屏", 2),  // 分屏特效
-    TIME("时间", 3);        // 时间特效
+    FILTER("Filter", 0),      // 滤镜特效
+    TRANSITION("Transition", 1),  // 转场特效
+    MULTIFRAME("Mutiframe", 2),  // 分屏特效
+    TIME("Time", 3);        // 时间特效
 
     private int mimeType;
     private String mName;

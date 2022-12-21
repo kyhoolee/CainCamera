@@ -24,9 +24,9 @@ import java.lang.ref.WeakReference;
 import java.util.Map;
 
 /**
- * 媒体播放器
- * 播放器的实现仿照MediaPlayer 的实现逻辑
- * 详情请参考 android.media.MediaPlayer.java 和 android_media_MediaPlayer.cpp
+ * media Player
+ * The implementation of the player follows the implementation logic of MediaPlayer
+ * Please refer to android.media.MediaPlayer.java and android_media_MediaPlayer.cpp for details
  */
 public class CainMediaPlayer implements IMediaPlayer {
 
@@ -861,6 +861,7 @@ public class CainMediaPlayer implements IMediaPlayer {
     }
 
     // 渲染结点类型，跟Native层的RenderNodeType数值保持一致。
+    // Rendering node type, consistent with the RenderNodeType value of the Native layer.
     private static final int NODE_NONE = -1;
     private static final int NODE_INPUT = 0;
     private static final int NODE_BEAUTY = 1;
@@ -883,6 +884,7 @@ public class CainMediaPlayer implements IMediaPlayer {
 
     /**
      * 设置播放器参数
+     * Set player parameters
      * @param type
      * @param option
      */
@@ -892,6 +894,7 @@ public class CainMediaPlayer implements IMediaPlayer {
 
     /**
      * 设置播放器参数
+     * Set player parameters
      * @param category
      * @param type
      * @param option
